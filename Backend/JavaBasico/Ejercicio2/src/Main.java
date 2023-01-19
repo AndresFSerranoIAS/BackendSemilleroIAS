@@ -2,14 +2,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
 public class Main {
     public static void main(String[] args) {
         //Creando arrayList de objetos de la clase User
         ArrayList<User> arrayUsers = new ArrayList<User>();
         while(true){
             Scanner lectura = new Scanner(System.in);
-            System.out.println("####------Menú inicial historial de clientes-----### ");
+            System.out.println("####------Menú principal de clientes-----### ");
             System.out.println("1. Añadir nuevo cliente.");
             System.out.println("2. Borrar un cliente.");
             System.out.println("3. Buscar un cliente.");
@@ -20,20 +19,78 @@ public class Main {
             System.out.println("Has seleccionado la opción " + opcion);
             switch (opcion){
                 case 1:
-                    String name = inputValidString("Ingrese por favor el nombre del cliente: ");
-                    int cedula = inputValidNumber("Ingrese por favor la cédula del ciente: ");
-                    User user = new User(name, cedula);
-                    arrayUsers.add(user);
-                    System.out.println("El usuario con nombre " + name + " y con cédula: " + cedula + " fue ingresado exitosamente al sistema");
+                    boolean swAdd;
+                    swAdd = true;
+                    while(swAdd) {
+                        String name = inputValidString("Ingrese por favor el nombre del cliente: ");
+                        int cedula = inputValidNumber("Ingrese por favor la cédula del cliente: ");
+                        User user = new User(name, cedula);
+                        if (!arrayUsers.isEmpty()) {
+                            for (User element : arrayUsers) {
+                                if (element != null) {
+                                    String nameUser = element.getName();
+                                    int cedulaUser = element.getCedula();
+                                    if (cedulaUser == cedula) {
+                                        System.out.println("Este cliente ya está registrado en la base de datos, volviendo al menú principal");
+                                        swAdd = false;
+                                        break;
+                                    } else if (cedulaUser != cedula) {
+                                        arrayUsers.add(user);
+                                        System.out.println("El usuario con nombre " + name + " y con cédula: " + cedula + " fue ingresado exitosamente al sistema");
+                                        swAdd = false;
+                                        break;
+                                    }
+                                } else {
+                                    swAdd = false;
+                                    break;
+                                }
+                            }
+                        }else{
+                            arrayUsers.add(user);
+                            System.out.println("El usuario con nombre " + name + " y con cédula: " + cedula + " fue ingresado exitosamente al sistema");
+                            swAdd= false;
+                        }
+                    }
                     break;
+
                 case 2:
-
-                    break;
+                        if(!arrayUsers.isEmpty()) {
+                            int inputCedula = inputValidNumber("Ingrese por favor la cédula del cliente: ");
+                            if (arrayUsers.removeIf(element -> element.getCedula() == inputCedula)) {
+                                System.out.println("El cliente fue eliminado satisfactoriamente de la base de datos.");
+                                break;
+                            } else {
+                                System.out.println("Por favor ingrese una cédula que se encuentre en la base de datos");
+                            }
+                        }else{
+                            System.out.println("La base de datos se encuentra vacía, no se puede buscar ningún cliente por favor ingrese al menos uno");
+                            break;
+                        }
                 case 3:
-
+                    boolean swSearch = false;
+                    if (!arrayUsers.isEmpty()){
+                        int inputCedula = inputValidNumber("Ingrese por favor la cédula del cliente: ");
+                        for(User element: arrayUsers){
+                            if(inputCedula==element.getCedula()){
+                                System.out.println("El cliente que busca está en la posición " + (arrayUsers.indexOf(element)) + ", El cliente se llama "+ element.getName() + " y su cédula es "+ element.getCedula());
+                                swSearch = true;
+                            }
+                        }
+                        if(!swSearch){
+                            System.out.println("No se encontró ningún elemento en la base de datos con esa cédula");
+                        }
+                    }else{
+                        System.out.println("La base de datos se encuentra vacía, no se puede buscar ningún cliente por favor ingrese al menos uno");
+                    }
                     break;
                 case 4:
-
+                    if (!arrayUsers.isEmpty()) {
+                        for (User user : arrayUsers) {
+                            System.out.println("** Cliente número "+ (arrayUsers.indexOf(user)+1) +": El cliente se llama " + user.getName() + " y su cédula es " + user.getCedula()+ " **");
+                        }
+                    }else{
+                        System.out.println("La base de datos está vacía no se puede desplegar ningún elemento");
+                    }
                     break;
                 case 5:
                     System.out.println("Saliendo del programa");
@@ -41,7 +98,6 @@ public class Main {
                 default:
                     System.out.println("Esta opción no se encuentra dentro de las disponibles, saliendo del programa");
             }
-            break;
         }
 
     }

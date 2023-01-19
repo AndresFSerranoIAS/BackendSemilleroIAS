@@ -3,7 +3,6 @@ public class User {
     private int cedula;
 
     //Constructor
-
     public User(String name, int cedula) {
         this.name = name;
         this.cedula = cedula;
