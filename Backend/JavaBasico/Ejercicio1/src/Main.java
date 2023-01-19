@@ -97,25 +97,25 @@ public class Main {
                         switch (arrayUsers.length){
 
                             case 0:{
-                                arrayUsers = append(arrayUsers,null);
-                                arrayUsers = append(arrayUsers,null);
-                                arrayUsers = append(arrayUsers,null);
-                                arrayUsers = append(arrayUsers,null);
+                                arrayUsers = Append(arrayUsers,null);
+                                arrayUsers = Append(arrayUsers,null);
+                                arrayUsers = Append(arrayUsers,null);
+                                arrayUsers = Append(arrayUsers,null);
                                 break;
                             }
                             case 1:{
-                                arrayUsers = append(arrayUsers,null);
-                                arrayUsers = append(arrayUsers,null);
-                                arrayUsers = append(arrayUsers,null);
+                                arrayUsers = Append(arrayUsers,null);
+                                arrayUsers = Append(arrayUsers,null);
+                                arrayUsers = Append(arrayUsers,null);
                                 break;
                             }
                             case 2:{
-                                arrayUsers = append(arrayUsers,null);
-                                arrayUsers = append(arrayUsers,null);
+                                arrayUsers = Append(arrayUsers,null);
+                                arrayUsers = Append(arrayUsers,null);
                                 break;
                             }
                             case 3:{
-                                arrayUsers = append(arrayUsers,null);
+                                arrayUsers = Append(arrayUsers,null);
                                 break;
                             }
                             default:
@@ -169,11 +169,13 @@ public class Main {
             }
         }
     }
-    private static <T> T[] append(T[] arr, T element)
+
+    public static User[] Append(User[] arr, User val)
     {
-        T[] array = Arrays.copyOf(arr, arr.length + 1);
-        array[arr.length] = element;
-        return array;
+        User[] newArray = new User[arr.length + 1];
+        System.arraycopy(arr, 0, newArray, 0, arr.length);
+        newArray[arr.length] = val;
+        return newArray;
     }
 
 }
