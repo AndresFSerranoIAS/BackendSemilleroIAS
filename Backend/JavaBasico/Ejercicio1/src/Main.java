@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import static java.lang.Integer.parseInt;
+
 public class Main {
     public static void main(String[] args) {
         //Creando array de objetos de la clase User
@@ -73,18 +75,22 @@ public class Main {
                     }
                 }
             } else if (opcion==3) {
-                System.out.println("Buscando cliente");
-                int inputCedulaSearch = inputValidNumber("Ingrese por favor la cédula:");
-                for(int i=0;i<arrayUsers.length;i++){
-                    if (arrayUsers[i]!=null) {
-                        if (inputCedulaSearch == arrayUsers[i].getCedula()) {
-                            System.out.println("El cliente que busca está en la posición " + i + " y el cliente se llama " + arrayUsers[i].getName() + " con cédula " + arrayUsers[i].getCedula());
-                            break;
-                        } else {
-                            System.out.println("El cliente que intenta buscar no se encuentra en la base de datos.");
+                boolean sw1;
+                sw1 = true;
+                    int inputCedula = inputValidNumber("Ingrese por favor la cédula:");
+                    for (int m = 0; m < arrayUsers.length; m++) {
+                        User user = arrayUsers[m];
+                        if (user != null) {
+                            if (user.getCedula() == inputCedula) {
+                                System.out.println("El cliente que busca está en la posición " + m + " y el cliente se llama " + user.getName() + " con cédula " + user.getCedula() + "\n");
+                                break;
+                            }
                         }
                     }
-                }
+                    sw1=false;
+                    if (sw1 == false){
+                        System.out.println("No se encontró ningún registro con cédula " + inputCedula);
+                    }
             } else if (opcion==4){
                 System.out.println("Mostrando los clientes");
                 if (arrayUsers.length<4){
@@ -169,4 +175,5 @@ public class Main {
         array[arr.length] = element;
         return array;
     }
+
 }
